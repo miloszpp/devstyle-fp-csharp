@@ -17,9 +17,9 @@ namespace devstylefpcsharp
             return x => y => z => func(x, y, z);
         }
 
-        public static Func<T1, T3> Compose<T1, T2, T3>(Func<T1, T2> f1, Func<T2, T3> f2) 
+        public static Func<X, Z> Compose<X, Y, Z>(Func<X, Y> f, Func<Y, Z> g)
         {
-            return x => f2(f1(x));
+            return x => g(f(x));
         }
 
         public static Func<T1, T4> Compose<T1, T2, T3, T4>(Func<T1, T2> f1, Func<T2, T3> f2, Func<T3, T4> f3)

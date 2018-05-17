@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Reflection.Metadata.Ecma335;
-using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace devstylefpcsharp
 {
@@ -31,31 +27,9 @@ namespace devstylefpcsharp
                 Reduce<ChartItem>((candidate, item) => candidate.Close > item.Close ? candidate : item)
             );
 
-            //Func<string, ChartItem> getChartItems = Compose(
-            //    (Func<string, string>)Normalize, 
-            //    Curry<string, string, string>(Fetch)("1m"),
-            //    Parse,
-            //    Reduce<ChartItem>((candidate, item) => candidate.Close > item.Close ? candidate : item)
-            //);
-
             var max = getChartItems("AAPL");
+            Console.WriteLine(max.Close);
         }
-
-        static string Normalize(string symbol)
-            => symbol.ToLower();
-
-        static string Fetch(string period, string symbol) 
-        {
-            using (var httpClient = new HttpClient())
-            {
-                return httpClient.GetStringAsync($"https://api.iextrading.com/1.0/stock/{symbol}/chart/{period}").Result;
-            }    
-        }
-
-        static ChartItem[] Parse(string json) 
-            => JsonConvert.DeserializeObject<ChartItem[]>(json);
-
-
     }
 
     class ChartItem {
